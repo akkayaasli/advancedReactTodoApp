@@ -17,6 +17,9 @@ function TodoList() {
   // Harcanan süre alanı
   const [completed, setCompleted] = useState(false); // Görev tamamlandı mı?
 
+  const [activeTaskId, setActiveTaskId] = useState(null); // Aktif işlem ID'si
+
+
 
 
 
@@ -121,18 +124,54 @@ function TodoList() {
   };
 
 
-  const startStopTimer = (id) => {
-    const updatedList = list.map((todo) =>
-      todo.id === id
-        ? {
-          ...todo,
-          timerRunning: !todo.timerRunning, // Zamanlayıcıyı başlat veya durdur
+  /*   const startStopTimer = (id) => {
+      const updatedList = list.map((todo) =>
+        todo.id === id
+          ? {
+            ...todo,
+            timerRunning: !todo.timerRunning, // Zamanlayıcıyı başlat veya durdur
+  
+          }
+          : todo
+      );
+      setList(updatedList);
+    };
+  
+   */
 
+
+
+  const startStopTimer = (id) => {
+    const updatedList = list.map((todo) => {
+      if (todo.id === id) {
+        if (todo.timerRunning) {
+          // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
+          return { ...todo, timerRunning: false };
+        } else {
+          // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
+          if (activeTaskId !== null) {
+            // Eğer mevcut bir işlem zamanlayıcısı çalışıyorsa, durdur
+            const existingActiveTask = list.find((task) => task.id === activeTaskId);
+            if (existingActiveTask) {
+              existingActiveTask.timerRunning = false;
+            }
+          }
+          setActiveTaskId(id); // Yeni işlemi aktif yap
+          return { ...todo, timerRunning: true };
         }
-        : todo
-    );
+      } else if (activeTaskId === todo.id && todo.timerRunning) {
+        // Başka bir göreve tıklandığında, mevcut görevin zamanlayıcısını durdur
+        return { ...todo, timerRunning: false };
+      }
+      return todo;
+    });
+
     setList(updatedList);
   };
+
+
+
+
 
   const completeTask = (id) => {
     const updatedList = list.map((todo) =>
@@ -157,39 +196,34 @@ function TodoList() {
 
 
 
+
+
   /*   const toggleTimer = (id) => {
       const updatedList = list.map((todo) => {
         if (todo.id === id) {
-          // Eğer timerRunning true ise durdur, false ise başlat
-          return { ...todo, timerRunning: !todo.timerRunning };
+          if (!todo.timerRunning) {
+            // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
+            const anotherRunningTask = list.find((task) => task.timerRunning);
+            if (!anotherRunningTask) {
+  
+              return { ...todo, timerRunning: true };
+            } else {
+              alert("Başka bir işlem için süre çalışıyor.");
+              return todo;
+            }
+          } else {
+            // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
+            return { ...todo, timerRunning: false };
+          }
         }
         return todo;
       });
       setList(updatedList);
-    }; */
+    };
+   */
 
-  const toggleTimer = (id) => {
-    const updatedList = list.map((todo) => {
-      if (todo.id === id) {
-        if (!todo.timerRunning) {
-          // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
-          const anotherRunningTask = list.find((task) => task.timerRunning);
-          if (!anotherRunningTask) {
 
-            return { ...todo, timerRunning: true };
-          } else {
-            alert("Başka bir işlem için süre çalışıyor.");
-            return todo;
-          }
-        } else {
-          // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
-          return { ...todo, timerRunning: false };
-        }
-      }
-      return todo;
-    });
-    setList(updatedList);
-  };
+
 
 
 
@@ -245,6 +279,30 @@ function TodoList() {
     harcananSaat: spentTime,
     tamamlandi: completed,
     timerRunning: false, // Timer başlatılmadı
+  };
+
+
+  const toggleTimer = (id) => {
+    const updatedList = list.map((todo) => {
+      if (todo.id === id) {
+        if (!todo.timerRunning) {
+          // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
+          const anotherRunningTask = list.find((task) => task.timerRunning);
+          if (!anotherRunningTask || anotherRunningTask.id === id) {
+            return { ...todo, timerRunning: true };
+          } else {
+            alert("Başka bir işlem için süre çalışıyor.");
+            return todo;
+          }
+        } else {
+          // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
+          return { ...todo, timerRunning: false };
+        }
+      }
+      return todo;
+    });
+
+    setList(updatedList);
   };
 
 
@@ -384,10 +442,15 @@ function TodoList() {
 
                 <button
                   style={{ backgroundColor: "blue", color: "white", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }}
-                  onClick={() => toggleTimer(todo.id)}
+                  onClick={() => startStopTimer(todo.id)}
                 >
                   {todo.timerRunning ? "Durdur" : "Başlat"}
                 </button>
+
+
+
+
+
 
               </td>
 
