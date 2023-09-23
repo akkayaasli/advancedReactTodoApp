@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 
 import "./TodoList.css";
 
-
-
-
-
 function TodoList() {
   const [list, setList] = useState([]);
   const [input, setInput] = useState("");
@@ -22,13 +18,6 @@ function TodoList() {
 
 
 
-
-
-
-
-
-
-
   const deleteTodo = (id) => {
     const newList = list.filter((todo) => todo.id !== id);
     setList(newList);
@@ -40,8 +29,6 @@ function TodoList() {
     setEditedTask(id);
 
   };
-
-
 
 
   const addTask = () => {
@@ -66,11 +53,6 @@ function TodoList() {
       alert("Görev ekleme işlemi başarılı.");
     }
   };
-
-
-
-
-
 
 
   const isValidTime = (timeStr) => {
@@ -124,23 +106,6 @@ function TodoList() {
   };
 
 
-  /*   const startStopTimer = (id) => {
-      const updatedList = list.map((todo) =>
-        todo.id === id
-          ? {
-            ...todo,
-            timerRunning: !todo.timerRunning, // Zamanlayıcıyı başlat veya durdur
-  
-          }
-          : todo
-      );
-      setList(updatedList);
-    };
-  
-   */
-
-
-
   const startStopTimer = (id) => {
     const updatedList = list.map((todo) => {
       if (todo.id === id) {
@@ -170,9 +135,6 @@ function TodoList() {
   };
 
 
-
-
-
   const completeTask = (id) => {
     const updatedList = list.map((todo) =>
       todo.id === id
@@ -195,39 +157,6 @@ function TodoList() {
   };
 
 
-
-
-
-  /*   const toggleTimer = (id) => {
-      const updatedList = list.map((todo) => {
-        if (todo.id === id) {
-          if (!todo.timerRunning) {
-            // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
-            const anotherRunningTask = list.find((task) => task.timerRunning);
-            if (!anotherRunningTask) {
-  
-              return { ...todo, timerRunning: true };
-            } else {
-              alert("Başka bir işlem için süre çalışıyor.");
-              return todo;
-            }
-          } else {
-            // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
-            return { ...todo, timerRunning: false };
-          }
-        }
-        return todo;
-      });
-      setList(updatedList);
-    };
-   */
-
-
-
-
-
-
-
   useEffect(() => {
     const timerInterval = setInterval(() => {
       const updatedList = list.map((todo) => {
@@ -245,7 +174,6 @@ function TodoList() {
       clearInterval(timerInterval); // Komponent kaldırıldığında zamanlayıcıyı temizle
     };
   }, [list]);
-
 
 
   const addTime = (timeStr) => {
@@ -306,19 +234,12 @@ function TodoList() {
   };
 
 
-
   const isListEmpty = list.length === 0;
-
-
 
   return (
     <div className="todo-container">
 
       <h1 style={{ color: isListEmpty ? "green" : "black" }}>Todo List</h1>
-
-
-
-
 
       <input
         className="todo-input"
@@ -336,7 +257,6 @@ function TodoList() {
       />
 
 
-
       <button style={{ backgroundColor: "green", color: "white" }} onClick={addTask}>EKLE</button>
       <br />
       <table>
@@ -347,21 +267,13 @@ function TodoList() {
             <th style={{ marginRight: "10px" }}>Harcanan Süre</th>
             <th style={{ marginLeft: "10px" }}>Tamamlanma Durumu</th>
             <th style={{ marginLeft: "10px" }}>İşlemler</th>
-
-
           </tr>
         </thead>
         <tbody>
 
-
-
           {list.map((todo) => (
             <tr key={todo.id} className={calculateTimeDifference(todo.tahminiSaat, todo.harcananSaat) > 0 ? "time-exceeded" : "time-ok"}
             >
-
-
-
-
 
               <td >
                 {editedTask === todo.id ? (
@@ -380,8 +292,6 @@ function TodoList() {
                       onChange={(e) => saveEditedTime(todo.id, e.target.value)} // Tahmini süreyi kaydetmek için işlev ekleyin
                     />
 
-
-
                     <button onClick={() => saveEditedTask(todo.id, todo.gorev)}>
                       KAYDET
                     </button>
@@ -393,28 +303,20 @@ function TodoList() {
                     </strong>
                   </div>
 
-
-
                 )}
               </td>
-
 
               <td>
                 {todo.tahminiSaat}
               </td>
 
-
               <td>
                 {todo.harcananSaat}
               </td>
 
-
-
               <td>
                 {!todo.tamamlandi ? (
                   <div>
-
-
 
                     <button
                       style={{ backgroundColor: "green", color: "white", marginLeft: "10px" }}
@@ -430,40 +332,21 @@ function TodoList() {
                 )}
               </td>
 
-
-
               <td>
                 <button style={{ backgroundColor: "red", color: "white", marginRight: "10px" }}
                   onClick={() => deleteTodo(todo.id)}
                   disabled={todo.timerRunning}>
                   SİL</button>
-
                 <button style={{ backgroundColor: "yellow", color: "gray", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }} onClick={() => editTask(todo.id)}>DÜZENLE</button>
-
                 <button
                   style={{ backgroundColor: "blue", color: "white", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }}
                   onClick={() => startStopTimer(todo.id)}
                 >
                   {todo.timerRunning ? "Durdur" : "Başlat"}
                 </button>
-
-
-
-
-
-
               </td>
-
-
-
-
             </tr>
-
-
           ))}
-
-
-
         </tbody>
       </table>
     </div >
