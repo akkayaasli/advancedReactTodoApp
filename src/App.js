@@ -43,84 +43,7 @@ function TodoList() {
 
   };
 
-  /*   const saveEditedTask = (id, newTask) => {
-      const updatedList = list.map((todo) =>
-        todo.id === id ? { ...todo, gorev: newTask } : todo
-  
-      );
-      setList(updatedList);
-      setEditedTask(null);
-    };
-  
-   */
 
-  /*  const addTask = () => {
-     if (input.trim() === '') {
- 
-       alert("Yapılacaklar girişine boş metin eklenemez.");
-     } else {
-       const newGorev = {
-         id: Math.random(),
-         gorev: input,
-       };
-       setList([...list, newGorev]);
-       setInput('');
-       alert('Görev ekleme işlemi başarılı.');
-     }
-   };
-  */
-
-  /*   const addTask = () => {
-      if (input.trim() === '') {
-        alert("Yapılacaklar girişine boş metin eklenemez.");
-      } else {
-        const newGorev = {
-          id: Math.random(),
-          gorev: input,
-        };
-        setList([...list, newGorev]);
-        setInput('');
-        saveToLocalStorage([...list, newGorev]); // Veriyi localStorage'a kaydet
-        alert('Görev ekleme işlemi başarılı.');
-      }
-    }; */
-
-  /*   const addTask = () => {
-      if (input.trim() === '') {
-        alert("Görev girişine boş metin eklenemez.");
-      } else if (estimatedTime.trim() === '') {
-        alert("Tahmini süre girişine boş metin eklenemez.");
-      } else {
-        const newTask = {
-          id: Math.random(),
-          gorev: input,
-          tahminiSaat: estimatedTime, // Tahmini süre ekleniyor
-        };
-        setList([...list, newTask]);
-        setInput('');
-        setEstimatedTime('');
-        alert('Görev ekleme işlemi başarılı.');
-      }
-    };
-   */
-
-  /*   const addTask = () => {
-      if (input.trim() === "") {
-        alert("Görev girişine boş metin eklenemez.");
-      } else if (!isValidTime(estimatedTime)) {
-        alert("Geçerli bir tahmini süre girmelisiniz.");
-      } else {
-        const newTask = {
-          id: Math.random(),
-          gorev: input,
-          tahminiSaat: estimatedTime,
-        };
-        setList([...list, newTask]);
-        setInput("");
-        setEstimatedTime("");
-        alert("Görev ekleme işlemi başarılı.");
-      }
-    }; */
 
 
   const addTask = () => {
@@ -168,19 +91,6 @@ function TodoList() {
   };
 
 
-  /*  useEffect(() => {
-     const localDatas = JSON.parse(localStorage.getItem("taskList"));
- 
-     if (localDatas) {
- 
-       setList(localDatas);
-     }
-   }, []);
- 
-   useEffect(() => {
-     localStorage.setItem("taskList", JSON.stringify(list));
- 
-   }, [list]); */
 
   const saveToLocalStorage = (data) => {
     localStorage.setItem("taskList", JSON.stringify(data));
