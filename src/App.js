@@ -154,16 +154,45 @@ function TodoList() {
     );
     setList(updatedList);
   };
+
+
+
+  /*   const toggleTimer = (id) => {
+      const updatedList = list.map((todo) => {
+        if (todo.id === id) {
+          // Eğer timerRunning true ise durdur, false ise başlat
+          return { ...todo, timerRunning: !todo.timerRunning };
+        }
+        return todo;
+      });
+      setList(updatedList);
+    }; */
+
   const toggleTimer = (id) => {
     const updatedList = list.map((todo) => {
       if (todo.id === id) {
-        // Eğer timerRunning true ise durdur, false ise başlat
-        return { ...todo, timerRunning: !todo.timerRunning };
+        if (!todo.timerRunning) {
+          // Eğer bu işlemde süre çalışmıyorsa ve başlatılmadıysa başlat
+          const anotherRunningTask = list.find((task) => task.timerRunning);
+          if (!anotherRunningTask) {
+
+            return { ...todo, timerRunning: true };
+          } else {
+            alert("Başka bir işlem için süre çalışıyor.");
+            return todo;
+          }
+        } else {
+          // Eğer bu işlemde süre çalışıyorsa ve duraklatılmışsa durdur
+          return { ...todo, timerRunning: false };
+        }
       }
       return todo;
     });
     setList(updatedList);
   };
+
+
+
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -206,6 +235,17 @@ function TodoList() {
     return spentMinutesTotal - estimatedMinutesTotal;
   };
 
+
+  // Aynı anda sadece bir işlem için süre işletilebilir.
+
+  const newTask = {
+    id: Math.random(),
+    gorev: input,
+    tahminiSaat: estimatedTime,
+    harcananSaat: spentTime,
+    tamamlandi: completed,
+    timerRunning: false, // Timer başlatılmadı
+  };
 
 
 
