@@ -20,3 +20,24 @@
     margin-bottom: 10px;
 
 }
+
+table {
+    border-collapse: collapse;
+
+}
+
+table td {
+    border: 1px solid black;
+}
+
+td {
+    background-color: #ccc;
+
+    color: black;
+}
+
+th {
+    background-color: #515459;
+
+    color: #fff;
+}
