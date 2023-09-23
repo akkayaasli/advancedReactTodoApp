@@ -24,12 +24,7 @@ function TodoList() {
 
 
 
-  /*   const deleteTodo = (id) => {
-      const newList = list.filter((todo) => todo.id !== id);
-  
-      setList(newList);
-    }
-   */
+
 
   const deleteTodo = (id) => {
     const newList = list.filter((todo) => todo.id !== id);
@@ -58,6 +53,7 @@ function TodoList() {
         tahminiSaat: estimatedTime,
         harcananSaat: spentTime, // Harcanan süre
         tamamlandi: completed, // Görev tamamlandı durumu
+
       };
       setList([...list, newTask]);
       setInput("");
@@ -131,6 +127,7 @@ function TodoList() {
         ? {
           ...todo,
           timerRunning: !todo.timerRunning, // Zamanlayıcıyı başlat veya durdur
+
         }
         : todo
     );
@@ -249,7 +246,8 @@ function TodoList() {
 
 
           {list.map((todo) => (
-            <tr key={todo.id} >
+            <tr key={todo.id}
+            >
 
 
 
@@ -261,6 +259,7 @@ function TodoList() {
                       type="text"
                       value={todo.gorev}
                       onChange={(e) => saveEditedTask(todo.id, e.target.value)}
+
 
                     />
                     <input
@@ -276,9 +275,14 @@ function TodoList() {
                     </button>
                   </div>
                 ) : (
-                  <div>
+                  <div style={{ backgroundColor: todo.timerRunning ? "yellow" : "" }}>
                     <strong style={{ backgroundColor: todo.tamamlandi ? "green" : "transparent", color: todo.tamamlandi ? "white" : "black" }}>
+
+
+
+
                       {todo.gorev}
+
                     </strong>
 
                   </div>
@@ -320,11 +324,9 @@ function TodoList() {
 
 
               <td>
-                <button style={{ backgroundColor: "red", color: "white", marginRight: "10px" }} onClick={() => deleteTodo(todo.id)}>
-
-
-
-
+                <button style={{ backgroundColor: "red", color: "white", marginRight: "10px" }}
+                  onClick={() => deleteTodo(todo.id)}
+                  disabled={todo.timerRunning}>
                   SİL</button>
 
                 <button style={{ backgroundColor: "yellow", color: "gray", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }} onClick={() => editTask(todo.id)}>DÜZENLE</button>
@@ -350,7 +352,7 @@ function TodoList() {
 
         </tbody>
       </table>
-    </div>
+    </div >
   );
 
 }

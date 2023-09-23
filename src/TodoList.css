@@ -41,3 +41,7 @@ th {
 
     color: #fff;
 }
+
+tr.yellow-background {
+    background-color: yellow;
+}
