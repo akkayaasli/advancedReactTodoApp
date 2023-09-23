@@ -318,8 +318,8 @@ function TodoList() {
                 {!todo.tamamlandi ? (
                   <div>
 
-                    <button
-                      style={{ backgroundColor: "green", color: "white", marginLeft: "10px" }}
+                    <button className="button1"
+
                       onClick={() => completeTask(todo.id)}
                     >
                       TAMAMLA
@@ -333,16 +333,16 @@ function TodoList() {
               </td>
 
               <td>
-                <button style={{ backgroundColor: "red", color: "white", marginRight: "10px" }}
+                <button className="button2"
                   onClick={() => deleteTodo(todo.id)}
                   disabled={todo.timerRunning}>
                   SİL</button>
-                <button style={{ backgroundColor: "yellow", color: "gray", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }} onClick={() => editTask(todo.id)}>DÜZENLE</button>
-                <button
-                  style={{ backgroundColor: "blue", color: "white", marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }}
+                <button className="button3" style={{ marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }} onClick={() => editTask(todo.id)}>DÜZENLE</button>
+                <button className="button4"
+                  style={{ marginLeft: "10px", visibility: todo.tamamlandi ? "hidden" : "visible" }}
                   onClick={() => startStopTimer(todo.id)}
                 >
-                  {todo.timerRunning ? "Durdur" : "Başlat"}
+                  {todo.timerRunning ? "DURDUR" : "BAŞLAT"}
                 </button>
               </td>
             </tr>
