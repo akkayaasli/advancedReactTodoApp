@@ -195,6 +195,18 @@ function TodoList() {
 
   };
 
+  // Süresi başlatılmamış yani o an aktif olmayan işlemde eğer harcanan süre tahmini süreyi geçtiyse “backgorund” kırmızı olacak.Geçmemişse mavi olacak.
+  const calculateTimeDifference = (estimatedTime, spentTime) => {
+    const [estimatedHours, estimatedMinutes] = estimatedTime.split(":").map(Number);
+    const [spentHours, spentMinutes] = spentTime.split(":").map(Number);
+
+    const estimatedMinutesTotal = estimatedHours * 60 + estimatedMinutes;
+    const spentMinutesTotal = spentHours * 60 + spentMinutes;
+
+    return spentMinutesTotal - estimatedMinutesTotal;
+  };
+
+
 
 
   const isListEmpty = list.length === 0;
@@ -246,8 +258,10 @@ function TodoList() {
 
 
           {list.map((todo) => (
-            <tr key={todo.id}
+            <tr key={todo.id} className={calculateTimeDifference(todo.tahminiSaat, todo.harcananSaat) > 0 ? "time-exceeded" : "time-ok"}
             >
+
+
 
 
 
@@ -277,15 +291,12 @@ function TodoList() {
                 ) : (
                   <div style={{ backgroundColor: todo.timerRunning ? "yellow" : "" }}>
                     <strong style={{ backgroundColor: todo.tamamlandi ? "green" : "transparent", color: todo.tamamlandi ? "white" : "black" }}>
-
-
-
-
                       {todo.gorev}
-
                     </strong>
-
                   </div>
+
+
+
                 )}
               </td>
 
